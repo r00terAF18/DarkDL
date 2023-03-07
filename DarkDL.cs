@@ -152,6 +152,11 @@ public class DarkDL
 
     public void GetEpisodeLinks()
     {
+        series_name = doc.DocumentNode.SelectSingleNode("//h2[@class=\"whiteMain\"]")
+            .InnerText;
+
+        series_name = ToUtf8(series_name);
+
         int ticks = doc.DocumentNode.SelectNodes("//a[@class=\"downloadGet\"]").Count;
 
         Console.WriteLine("[+] Got all the links...");
