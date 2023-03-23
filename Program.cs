@@ -1,5 +1,4 @@
-﻿using System.Text;
-using DarkMoviesDL;
+﻿using DarkMoviesDL;
 using ShellProgressBar;
 
 ProgressBarOptions ProcessBarOption = new()
@@ -12,13 +11,6 @@ ProgressBarOptions ProcessBarOption = new()
     ProgressBarOnBottom = false,
     ProgressCharacter = '='
 };
-
-string ToUtf8(string text)
-{
-    byte[] bytes = Encoding.Default.GetBytes(text);
-    text = Encoding.UTF8.GetString(bytes);
-    return text;
-}
 
 
 Console.Write("Series Link: ");

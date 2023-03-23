@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net;
 using System.Text;
 using ShellProgressBar;
@@ -6,15 +5,18 @@ using HtmlAgilityPack;
 
 namespace DarkMoviesDL;
 
+/// <summary>
+/// 
+/// </summary>
 public class DarkDL
 {
     private ProgressBarOptions _barOptions;
     private ProgressBar bar;
-    
+
     private CookieContainer cc = new();
     private List<string> epidsode_urls = new();
     private HtmlDocument doc = new();
-    
+
     public string series_link;
     public int Episodes;
     public string series_name;
@@ -33,7 +35,12 @@ public class DarkDL
         File.WriteAllText("index.html", read.ReadToEnd());
         doc.Load("index.html");
     }
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="series_link"></param>
+    /// <param name="barOptions"></param>
     public DarkDL(string series_link, ProgressBarOptions barOptions)
     {
         this._barOptions = barOptions;
@@ -70,23 +77,6 @@ public class DarkDL
         byte[] bytes = Encoding.Default.GetBytes(text);
         text = Encoding.UTF8.GetString(bytes);
         return text;
-    }
-
-    /// <summary>
-    /// Checks if the required directory exists based on the course name
-    /// if not, create it
-    /// </summary>
-    private void CreateDirStructure()
-    {
-        series_name = doc.DocumentNode.SelectSingleNode("//h2[@class=\"whiteMain\"]")
-            .InnerText;
-
-        series_name = ToUtf8(series_name);
-
-        if (!Directory.Exists(series_name))
-        {
-            Directory.CreateDirectory(series_name);
-        }
     }
 
     /// <summary>
@@ -160,7 +150,7 @@ public class DarkDL
         int ticks = doc.DocumentNode.SelectNodes("//a[@class=\"downloadGet\"]").Count;
 
         Console.WriteLine("[+] Got all the links...");
-        
+
         bar = new(ticks, "Episodes: ", _barOptions);
         Thread.Sleep(500);
         foreach (var node in doc.DocumentNode.SelectNodes("//a[@class=\"downloadGet\"]"))
@@ -172,11 +162,11 @@ public class DarkDL
         Episodes = epidsode_urls.Count;
     }
 
-    
+
     public void SaveEpisodeLinks()
     {
         Console.WriteLine("[+] Saving Episode Links...");
         File.AppendAllLines($"{series_name}.txt", epidsode_urls, Encoding.UTF8);
     }
-    
+
 }
