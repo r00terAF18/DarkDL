@@ -16,7 +16,18 @@ ProgressBarOptions ProcessBarOption = new()
 Console.Write("Series Link: ");
 string link = Console.ReadLine();
 
-DarkDL dm = new(link, ProcessBarOption);
-dm.GetEpisodeLinks();
-dm.SaveEpisodeLinks();
-File.Delete("index.html");
+if (String.IsNullOrEmpty(link))
+{
+    Console.WriteLine("Link can not be empty, exiting gravefully!");
+}
+else if (!link.Contains("dark-movies.fun") || !link.Contains("darkmovies.cash"))
+{
+    Console.WriteLine("Link is not valid, exiting gracefully!");
+}
+else
+{
+    DarkDL dm = new(link, ProcessBarOption);
+    dm.GetEpisodeLinks();
+    dm.SaveEpisodeLinks();
+    File.Delete("index.html");
+}

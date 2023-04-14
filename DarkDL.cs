@@ -152,7 +152,7 @@ public class DarkDL
         Console.WriteLine("[+] Got all the links...");
 
         bar = new(ticks, "Episodes: ", _barOptions);
-        Thread.Sleep(500);
+        Thread.Sleep(750);
         foreach (var node in doc.DocumentNode.SelectNodes("//a[@class=\"downloadGet\"]"))
         {
             // ClipboardService.SetTextAsync(node.Attributes["href"].Value.Trim());
